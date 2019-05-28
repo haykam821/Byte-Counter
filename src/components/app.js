@@ -30,6 +30,17 @@ class App extends React.Component {
 							});
 						}
 					},
+					onSelect: ({ target }) => {
+						if (target && target.value && target.selectionStart && target.selectionEnd) {
+							const selectedValue = target.value.substring(target.selectionStart, target.selectionEnd);
+							this.setState({
+								selected: {
+									bytes: new Blob([selectedValue]).size,
+									chars: selectedValue.length,
+								},
+							});
+						}
+					}
 				}),
 				elem("span", null, `Selected: ${this.state.selected.bytes} bytes, ${this.state.selected.chars} chars`),
 				elem("span", null, `Total: ${this.state.total.bytes} bytes, ${this.state.total.chars} chars`),
