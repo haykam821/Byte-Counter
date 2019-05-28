@@ -21,16 +21,18 @@ class App extends React.Component {
 			children: [
 				elem("textarea", {
 					onInput: ({ target }) => {
-						this.setState({
-							total: {
-								bytes: 0,
-								chars: target.length,
-							},
-						});
+						if (target && target.value) {
+							this.setState({
+								total: {
+									bytes: new Blob([target.value]).size,
+									chars: target.value.length,
+								},
+							});
+						}
 					},
 				}),
 				elem("span", null, `Selected: ${this.state.selected.bytes} bytes, ${this.state.selected.chars} chars`),
-				elem("span", null, `Total: {this.state.total.bytes} bytes, ${this.state.total.chars} chars`),
+				elem("span", null, `Total: ${this.state.total.bytes} bytes, ${this.state.total.chars} chars`),
 			],
 		});
 	}
